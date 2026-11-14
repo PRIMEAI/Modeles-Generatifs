@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ee;--panel:#ffffff;--ink:#1c1b19;--muted:#6b675f;--line:#e2ddd2;--soft:#efebe2;
+  --accent:#0f6e66;--accent-ink:#ffffff;--accent-soft:#d8ecea;--hl:#e09a2d;--hl-soft:#fbe8c6;
+  --pos:#2a6fdb;--neg:#d2453b;--zero:#f4f2ec;--r:#d2453b;--g:#2f9e57;--b:#2a6fdb;--vio:#7a4fd0;
+  --shadow:0 1px 2px rgba(30,25,15,.06),0 4px 16px rgba(30,25,15,.05);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#151513;--panel:#1e1d1a;--ink:#ece9e2;--muted:#a19b8f;--line:#35322c;--soft:#272520;
+  --accent:#4fb5aa;--accent-ink:#0d1f1d;--accent-soft:#1b3b38;--hl:#f0b456;--hl-soft:#41321a;
+  --pos:#6ea3ff;--neg:#ff7d72;--zero:#25231f;--r:#ff7d72;--g:#5cc97f;--b:#6ea3ff;--vio:#a985f0;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);}}
+:root[data-theme="dark"]{
+  --bg:#151513;--panel:#1e1d1a;--ink:#ece9e2;--muted:#a19b8f;--line:#35322c;--soft:#272520;
+  --accent:#4fb5aa;--accent-ink:#0d1f1d;--accent-soft:#1b3b38;--hl:#f0b456;--hl-soft:#41321a;
+  --pos:#6ea3ff;--neg:#ff7d72;--zero:#25231f;--r:#ff7d72;--g:#5cc97f;--b:#6ea3ff;--vio:#a985f0;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 16px 48px}
+header.top{margin-bottom:22px}
+.eyebrow{font:500 12px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.eyebrow a{color:var(--muted);text-decoration:none}.eyebrow a:hover{color:var(--accent)}
+h1{font-size:clamp(26px,4vw,36px);line-height:1.15;margin:8px 0 10px;letter-spacing:-.01em;font-weight:600}
+h2{font-size:19px;margin:0 0 12px;font-weight:600}
+h3{font-size:15px;margin:0 0 8px;font-weight:600}
+.author{font:500 15px var(--sans);color:var(--ink);margin:-4px 0 12px;letter-spacing:.01em}
+.lead{max-width:780px;color:var(--muted);margin:0;font-size:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:16px;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.mono{font-family:var(--mono)}
+.controls{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center}
+.ctl{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);min-width:0}
+.ctl b{color:var(--ink);font:600 13px var(--mono)}
+.ctl .lab{display:flex;justify-content:space-between;gap:10px}
+select,input[type=number],input[type=text]{font:14px var(--sans);color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:6px 8px;min-height:34px}
+input[type=number]{width:72px;font-family:var(--mono)}
+input[type=range]{accent-color:var(--accent);width:150px}
+.btn{font:500 14px var(--sans);color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:9px;padding:7px 13px;cursor:pointer;min-height:36px;display:inline-flex;align-items:center;gap:6px;transition:background .15s,border-color .15s}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;flex-wrap:wrap}
+.seg button{font:500 13px var(--sans);background:var(--soft);color:var(--ink);border:0;padding:7px 12px;cursor:pointer;min-height:34px}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on{background:var(--accent);color:var(--accent-ink)}
+.mat{display:inline-grid;gap:3px;font-family:var(--mono)}
+.cell{width:var(--cs,40px);height:var(--cs,40px);display:flex;align-items:center;justify-content:center;border-radius:6px;background:var(--zero);font-size:calc(var(--cs,40px)*.36);position:relative;border:1.5px solid transparent;transition:background .2s,border-color .15s,box-shadow .15s;color:var(--ink);user-select:none}
+.cell.pad{background:transparent;border:1.5px dashed var(--line);color:var(--muted)}
+.cell.win{border-color:var(--hl);box-shadow:0 0 0 2px var(--hl-soft)}
+.cell.cur{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.cell.dim{opacity:.35}
+.cell .w{position:absolute;right:3px;bottom:1px;font-size:calc(var(--cs,40px)*.24);color:var(--hl);font-weight:600}
+.cell.clickable{cursor:pointer}.cell.clickable:hover{border-color:var(--accent)}
+.mlabel{font:600 12px var(--mono);color:var(--muted);margin-bottom:6px;letter-spacing:.03em}
+.formula{font-family:var(--mono);font-size:14px;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-x:auto;line-height:1.8}
+.formula .res{color:var(--accent);font-weight:600}
+.pill{display:inline-flex;align-items:center;gap:6px;font:600 12px var(--mono);padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--ink)}
+.pill.warn{background:var(--hl-soft)}
+.pill.bad{background:color-mix(in oklab,var(--neg) 22%,transparent)}
+.note{border-left:3px solid var(--accent);padding:8px 12px;background:var(--soft);border-radius:0 8px 8px 0;font-size:14px}
+.note.warn{border-color:var(--hl)}
+.note.bad{border-color:var(--neg)}
+.kpis{display:flex;gap:10px;flex-wrap:wrap}
+.kpi{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-width:130px}
+.kpi .v{font:600 22px var(--mono);color:var(--ink)}
+.kpi .k{font-size:12px;color:var(--muted)}
+.op{font:600 22px var(--mono);color:var(--muted);align-self:center;padding:0 4px}
+.scrollx{overflow-x:auto;max-width:100%}
+.svgbox svg{width:100%;height:auto;display:block}
+.barrow{display:grid;grid-template-columns:200px 1fr 120px;gap:8px;align-items:center;font-size:13px;margin:6px 0}
+.barrow .b{height:18px;border-radius:5px;background:var(--accent);transition:width .25s}
+.barrow span:last-child{font-family:var(--mono);text-align:right}
+@media (max-width:640px){.barrow{grid-template-columns:110px 1fr 96px}}
+table.t{border-collapse:collapse;font:13px var(--mono);width:100%}
+table.t th,table.t td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+table.t th{color:var(--muted);font-weight:600}
+table.t th:first-child,table.t td:first-child{text-align:left}
+table.t tr.sel td{background:var(--accent-soft)}
+table.t tr.clk{cursor:pointer}table.t tr.clk:hover td{background:var(--soft)}
+footer{margin-top:36px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{color:var(--accent)}
+svg text{font-family:var(--sans)}
+canvas.px{image-rendering:pixelated}
+kbd{font:12px var(--mono);background:var(--soft);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 5px}
+.hidden{display:none!important}
+@media (max-width:640px){.wrap{padding:20px 16px 40px}.card{padding:14px}input[type=range]{width:120px}}
+</style>
+<title>GAN – Le discriminateur optimal</title>
+<style>
+.lg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.lg i{display:inline-block;width:18px;height:4px;border-radius:2px;margin-right:6px;vertical-align:middle}
+#plot svg{max-width:1000px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow"><span>Modèles génératifs</span><a href="index.html">← Toutes les animations</a></div>
+  <h1>Le discriminateur optimal</h1>
+  <p class="author">Moulay Akhloufi</p>
+  <p class="lead">Pour un générateur fixé, le meilleur discriminateur possible est <strong>D*(x) = p<sub>données</sub>(x) / (p<sub>données</sub>(x) + p<sub>G</sub>(x))</strong>. Avec ce D*, la valeur du jeu devient −log 4 + 2·JS(p<sub>données</sub> ‖ p<sub>G</sub>) : entraîner G revient à minimiser la divergence de Jensen-Shannon. Déplacez la distribution du générateur.</p>
+</header>
+<div class="stack">
+  <section class="card stack">
+    <div class="controls" id="ctl"></div>
+    <div id="plot" class="svgbox"></div>
+    <div class="lg"><span><i style="background:var(--b)"></i>p<sub>données</sub></span><span><i style="background:var(--hl)"></i>p<sub>G</sub></span><span><i style="background:var(--neg)"></i>D*(x) (axe de droite, 0 à 1)</span></div>
+  </section>
+  <div class="grid2">
+    <section class="card stack"><h2>Valeurs</h2><div class="kpis" id="kpis"></div><div class="formula" id="f"></div></section>
+    <section class="card stack"><h2>À retenir</h2>
+      <div class="note">Là où il y a beaucoup plus de vraies données que de faux, D* ≈ 1 ; là où le générateur domine, D* ≈ 0. Quand p<sub>G</sub> = p<sub>données</sub>, D* = ½ partout et JS = 0 : c’est le minimum global (Goodfellow et al. 2014).</div>
+      <div class="note warn">Si les deux distributions ne se recouvrent pas (supports disjoints), JS reste bloquée à log 2 ≈ 0,693 quelle que soit leur distance : le gradient est nul. C’est la motivation du WGAN (page suivante).</div>
+    </section>
+  </div>
+</div>
+<footer><span>© 2026 Moulay Akhloufi · Deep Learning · Modèles génératifs</span><a href="index.html">Toutes les animations du module →</a></footer>
+</div>
+<script>
+// ---- utilitaires communs ----
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+function h(tag, attrs = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (k === 'class') e.className = v;
+    else if (k === 'style' && v && typeof v === 'object') { for (const [sk, sv] of Object.entries(v)) { if (sv == null) continue; sk.startsWith('--') ? e.style.setProperty(sk, sv) : (e.style[sk] = sv); } }
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else if (k === 'html') e.innerHTML = v;
+    else if (v !== false && v != null) e.setAttribute(k, v);
+  }
+  for (const c of kids.flat()) if (c != null) e.append(c.nodeType ? c : document.createTextNode(c));
+  return e;
+}
+function fmt(x, d = 2) {
+  if (!isFinite(x)) return x > 0 ? '∞' : '—';
+  let s = (Math.round(x * 10 ** d) / 10 ** d).toString();
+  if (s === '-0') s = '0';
+  if (s.includes('e')) s = x.toExponential(1);
+  return s.replace('.', ',').replace('-', '−');
+}
+function fmtInt(n) { return Math.round(n).toLocaleString('fr-CA').replace(/ | /g, ' '); }
+function fmtM(n) { return n >= 1e9 ? fmt(n / 1e9, 2) + ' G' : n >= 1e6 ? fmt(n / 1e6, 2) + ' M' : n >= 1e3 ? fmt(n / 1e3, 1) + ' k' : fmtInt(n); }
+function par(x) { return x < 0 ? '(' + fmt(x) + ')' : fmt(x); }
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+function divColor(v, m) {
+  if (!m) return 'var(--zero)';
+  const t = clamp(Math.abs(v) / m, 0, 1);
+  return `color-mix(in oklab, ${v < 0 ? 'var(--neg)' : 'var(--pos)'} ${Math.round(t * 70)}%, var(--zero))`;
+}
+function seqColor(v, m, c = 'var(--accent)', top = 75) {
+  const t = m ? clamp(v / m, 0, 1) : 0;
+  return `color-mix(in oklab, ${c} ${Math.round(t * top)}%, var(--zero))`;
+}
+function rng(seed = 1) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+function gauss(R) { let u = 0; while (!u) u = R(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * R()); }
+const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const isDark = () => matchMedia('(prefers-color-scheme: dark)').matches;
+class Player {
+  constructor({ n, onStep, speed = 900 }) { this.n = n; this.i = 0; this.onStep = onStep; this.speed = speed; this.t = null; }
+  go(i) { this.i = ((i % this.n) + this.n) % this.n; this.onStep(this.i); }
+  next() { this.go(this.i + 1); } prev() { this.go(this.i - 1); }
+  play() { this.stop(); this.t = setInterval(() => this.next(), this.speed); this.playing = true; }
+  stop() { clearInterval(this.t); this.t = null; this.playing = false; }
+  toggle() { this.playing ? this.stop() : this.play(); return this.playing; }
+  setSpeed(ms) { this.speed = ms; if (this.playing) this.play(); }
+}
+function playerBar(p, { extra = [], prevNext = true } = {}) {
+  const play = h('button', { class: 'btn primary', onclick: () => { play.textContent = p.toggle() ? '❚❚ Pause' : '▶ Lecture'; } }, '▶ Lecture');
+  const sp = h('input', { type: 'range', min: 100, max: 2000, step: 50, value: 2100 - p.speed, oninput: e => p.setSpeed(2100 - +e.target.value), 'aria-label': 'Vitesse' });
+  const kids = prevNext ? [h('button', { class: 'btn', onclick: () => { bar.stopUI(); p.prev(); } }, '◀ Précédent'), play, h('button', { class: 'btn', onclick: () => { bar.stopUI(); p.next(); } }, 'Suivant ▶')] : [play];
+  const bar = h('div', { class: 'controls' }, ...kids, h('label', { class: 'ctl' }, h('span', {}, 'Vitesse'), sp), ...extra);
+  bar.stopUI = () => { p.stop(); play.textContent = '▶ Lecture'; };
+  return bar;
+}
+function slider({ label, min, max, step = 1, value, onInput, fmtv = v => v, width }) {
+  const out = h('b', {}, fmtv(value));
+  const inp = h('input', { type: 'range', min, max, step, value, style: width ? { width } : null });
+  inp.addEventListener('input', () => { out.textContent = fmtv(+inp.value); onInput(+inp.value); });
+  const w = h('label', { class: 'ctl' }, h('span', { class: 'lab' }, h('span', {}, label), out), inp);
+  w.input = inp; w.set = v => { inp.value = v; out.textContent = fmtv(+v); };
+  return w;
+}
+function segmented(options, value, onChange) {
+  const s = h('div', { class: 'seg', role: 'group' }); const b2 = new Map();
+  const btns = options.map(([v, l]) => { const b = h('button', { class: v === value ? 'on' : '', onclick: () => { btns.forEach(x => x.classList.remove('on')); b.classList.add('on'); onChange(v); } }, l); b2.set(v, b); return b; });
+  s.append(...btns); s.set = v => { btns.forEach(b => b.classList.remove('on')); b2.get(v) && b2.get(v).classList.add('on'); };
+  return s;
+}
+function matrix(rows, cols, { cs = 40, gap = 3, cls = '' } = {}) {
+  const el = h('div', { class: 'mat ' + cls, style: { gridTemplateColumns: `repeat(${cols}, var(--cs))`, '--cs': cs + 'px', gap: gap + 'px' } });
+  const cells = [];
+  for (let r = 0; r < rows; r++) { cells.push([]); for (let c = 0; c < cols; c++) { const d = h('div', { class: 'cell' }); el.append(d); cells[r].push(d); } }
+  return { el, cells };
+}
+// image en niveaux de gris (Float32Array w×h, valeurs 0..1 ou signées) → canvas
+function grayCanvas(data, w, hh, { scale = 4, mode = 'gray', max = null, el = null } = {}) {
+  const cv = el || h('canvas', { class: 'px' }); cv.width = w; cv.height = hh;
+  cv.style.width = w * scale + 'px'; cv.style.height = hh * scale + 'px';
+  const ctx = cv.getContext('2d'), im = ctx.createImageData(w, hh);
+  let m = max; if (m == null) { m = 1e-9; for (const v of data) m = Math.max(m, Math.abs(v)); }
+  for (let i = 0; i < w * hh; i++) {
+    const v = data[i]; let c;
+    if (mode === 'gray') { const g = 255 * clamp(v / m, 0, 1); c = [g, g, g]; }
+    else if (mode === 'heat') { const t = clamp(v / m, 0, 1); c = [255 * Math.min(1, t * 1.6), 255 * clamp(t * 1.6 - .5, 0, 1), 60 * (1 - t)]; }
+    else { const t = clamp(v / m, -1, 1); c = t >= 0 ? [255 - 200 * t, 255 - 130 * t, 255] : [255, 255 + 190 * t, 255 + 180 * t]; }
+    im.data[4 * i] = c[0]; im.data[4 * i + 1] = c[1]; im.data[4 * i + 2] = c[2]; im.data[4 * i + 3] = 255;
+  }
+  ctx.putImageData(im, 0, 0); return cv;
+}
+// tracé de courbes simple en SVG
+function lineChart({ series, w = 520, hgt = 240, xmin, xmax, ymin, ymax, xlabel = '', ylabel = '', pad = 38, extra = '', xticks = 5, yticks = 4, yfmt = v => fmt(v, 2), xfmt = v => fmt(v, 1) }) {
+  const X = x => pad + (x - xmin) / (xmax - xmin) * (w - pad - 12), Y = y => hgt - pad + 8 - (y - ymin) / (ymax - ymin) * (hgt - pad - 4);
+  let s = `<svg viewBox="0 0 ${w} ${hgt + 10}">`;
+  for (let i = 0; i <= yticks; i++) { const v = ymin + (ymax - ymin) * i / yticks; s += `<line x1="${pad}" x2="${w - 12}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${pad - 6}" y="${Y(v) + 4}" font-size="11" text-anchor="end" fill="var(--muted)">${yfmt(v)}</text>`; }
+  for (let i = 0; i <= xticks; i++) { const v = xmin + (xmax - xmin) * i / xticks; s += `<text x="${X(v)}" y="${hgt + 6}" font-size="11" text-anchor="middle" fill="var(--muted)">${xfmt(v)}</text>`; }
+  if (xlabel) s += `<text x="${w - 12}" y="${hgt - pad + 2}" font-size="11" text-anchor="end" fill="var(--muted)">${xlabel}</text>`;
+  if (ylabel) s += `<text x="${pad + 4}" y="12" font-size="11" fill="var(--muted)">${ylabel}</text>`;
+  for (const sr of series) {
+    if (sr.pts.length < 2 && !sr.dots) continue;
+    if (sr.dots) for (const [x, y] of sr.pts) s += `<circle cx="${X(x)}" cy="${Y(clamp(y, ymin, ymax))}" r="${sr.r || 3.5}" fill="${sr.color}" fill-opacity="${sr.op || 1}"/>`;
+    else s += `<path d="${sr.pts.map(([x, y], i) => (i ? 'L' : 'M') + X(x).toFixed(1) + ',' + Y(clamp(y, ymin - (ymax - ymin), ymax + (ymax - ymin))).toFixed(1)).join('')}" fill="${sr.fill || 'none'}" fill-opacity="${sr.fillop || .2}" stroke="${sr.color}" stroke-width="${sr.width || 2.5}" ${sr.dash ? `stroke-dasharray="${sr.dash}"` : ''}/>`;
+  }
+  return s + (typeof extra === 'function' ? extra(X, Y) : extra) + '</svg>';
+}
+
+let md = 0, sdd = 1, mg = 2.5, sdg = .8, two = false;
+const N = (x, m, s) => Math.exp(-((x - m) ** 2) / (2 * s * s)) / (s * Math.sqrt(2 * Math.PI));
+const pd = x => two ? .5 * N(x, md - 1.6, sdd * .5) + .5 * N(x, md + 1.6, sdd * .5) : N(x, md, sdd), pg = x => N(x, mg, sdg);
+const sl = (l, get, set, a, b, st = .05) => slider({ label: l, min: a, max: b, step: st, value: get(), fmtv: v => fmt(v, 2), onInput: v => { set(v); draw(); } });
+const sMg = sl('Moyenne de p_G', () => mg, v => mg = v, -6, 6), sSg = sl('Écart-type de p_G', () => sdg, v => sdg = v, .05, 3);
+$('#ctl').append(sMg, sSg, sl('Écart-type des données', () => sdd, v => sdd = v, .05, 3),
+  h('label', { class: 'ctl' }, h('span', {}, 'Données'), segmented([[false, 'Une gaussienne'], [true, 'Deux bosses']], two, v => { two = v; draw(); })),
+  h('button', { class: 'btn', onclick: () => { mg = md; sdg = sdd; sMg.set(mg); sSg.set(sdg); two = false; $('#ctl .seg').set(false); draw(); } }, 'p_G = p_données'),
+  h('button', { class: 'btn', onclick: () => { mg = 5; sdg = .1; sMg.set(5); sSg.set(.1); draw(); } }, 'Supports presque disjoints'));
+function draw() {
+  const XM = 8, n = 1600, dx = 2 * XM / n; let js = 0, ymax = 0; const pts = [];
+  for (let i = 0; i <= n; i++) { const x = -XM + i * dx, a = pd(x), b = pg(x), m = (a + b) / 2; if (a > 0) js += .5 * a * Math.log(a / m) * dx; if (b > 0) js += .5 * b * Math.log(b / m) * dx; ymax = Math.max(ymax, a, b); pts.push([x, a, b, a + b > 1e-12 ? a / (a + b) : null]); }
+  ymax = Math.min(ymax * 1.1, 4);
+  const W = 1000, H = 330, pad = 40, X = x => pad + (x + XM) / (2 * XM) * (W - 2 * pad), Y = y => H - pad - y / ymax * (H - 2 * pad), YD = d => H - pad - d * (H - 2 * pad);
+  const path = (k, sc) => pts.filter(p => p[k] != null).map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ',' + sc(p[k]).toFixed(1)).join('');
+  let s = `<svg viewBox="0 0 ${W} ${H + 10}"><line x1="${pad}" x2="${W - pad}" y1="${H - pad}" y2="${H - pad}" stroke="var(--line)"/><line x1="${pad}" x2="${W - pad}" y1="${YD(.5)}" y2="${YD(.5)}" stroke="var(--muted)" stroke-dasharray="5 4"/><text x="${W - pad + 4}" y="${YD(.5) + 4}" font-size="11" fill="var(--muted)">½</text><text x="${W - pad + 4}" y="${YD(1) + 4}" font-size="11" fill="var(--muted)">1</text>`;
+  for (let x = -8; x <= 8; x += 2) s += `<text x="${X(x)}" y="${H - pad + 16}" font-size="11" text-anchor="middle" fill="var(--muted)">${fmt(x, 0)}</text>`;
+  s += `<path d="${path(1, Y)}" fill="none" stroke="var(--b)" stroke-width="3"/><path d="${path(2, Y)}" fill="none" stroke="var(--hl)" stroke-width="3"/>`;
+  // D* seulement là où au moins une densité est non négligeable
+  const sig = pts.filter(p => p[1] + p[2] > 1e-4 * ymax);
+  s += `<path d="${sig.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ',' + YD(p[3]).toFixed(1)).join('')}" fill="none" stroke="var(--neg)" stroke-width="2.5"/>`;
+  $('#plot').innerHTML = s + '</svg>';
+  const V = -Math.log(4) + 2 * js;
+  $('#kpis').innerHTML = `<div class="kpi"><div class="v">${fmt(js, 3)}</div><div class="k">JS(p<sub>données</sub> ‖ p<sub>G</sub>)  (max log 2 ≈ 0,693)</div></div><div class="kpi"><div class="v">${fmt(V, 3)}</div><div class="k">V(D*, G) (min −log 4 ≈ −1,386)</div></div>`;
+  $('#f').innerHTML = `D*(x) = p<sub>données</sub>(x) / (p<sub>données</sub>(x) + p<sub>G</sub>(x))<br>V(D*, G) = −log 4 + 2 · ${fmt(js, 3)} = <span class="res">${fmt(V, 3)}</span>` + (js > .69 ? '<br><b style="color:var(--neg)">JS ≈ log 2 : déplacer un peu p<sub>G</sub> ne change presque rien, le gradient s’annule.</b>' : '');
+}
+draw();
+</script>
+</body>
+</html>
